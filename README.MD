@@ -27,7 +27,7 @@ The duty information is scraped from a locally downloaded CVS file (the google s
 
 - `resources/dutyScheduleF2020.cvs`
 
-**Please Note**: This is not the actually duty schedule, all of the names have been replaced with my hero privacy.
+**Please Note**: This is not the actually duty schedule, all of the names have been replaced with my hero for privacy.
 
 The UOD is determined by checking what day of the week it is. Nothing fancy there.
 
@@ -47,6 +47,10 @@ The UOD is determined by checking what day of the week it is. Nothing fancy ther
 ### Selenium
 
 I used selenium as my web scraper. As such, I needed a driver and used chromedriver located in `resources/chromedriver`. It's the driver for chrome 87, so if it doesn't work first make sure your google chrome is installed with version 87. If you have 86 or 88, you can install the correct chromedriver from https://chromedriver.chromium.org/.
+
+#### Timeout errors
+
+Sometimes selenium (or more aptly the chromedriver) times out when trying to connect to a website. I wrote in a 10 second timeout limit for each of the two connections. If you have slow internet and it keeps timing out, you can go into the `seleniumScraper.py` file and change the `timeout = 10` lines (two of them) to a longer time (such as 20).
 
 ### Scripts
 
