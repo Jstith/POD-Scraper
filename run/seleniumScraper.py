@@ -21,7 +21,7 @@ def getWeather():
     browser = webdriver.Chrome(executable_path='resources/chromedriver.exe', options=options)
     browser.get('https://www.google.com/search?q=new+london+sunrise+sunset+tomorrow')
 
-    # Waits for page to fully load, tomeout value can be changed if you have a slow connection.
+    # Waits for page to fully load, timeout value can be changed if you have a slow connection.
     timeout = 10
     try:
         WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="rso"]/div[1]/div/div[1]/w-answer[1]/w-answer-desktop/div[1]')))
@@ -116,6 +116,6 @@ def getUOD():
 
 # Uncomment these function calls to run this script from the CLI
 
-#print(getWeather())
+# print(getWeather())
 # print(getDuty())
 # print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
