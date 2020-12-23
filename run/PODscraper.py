@@ -8,7 +8,7 @@ def click():
     # Disables button while information is being gathered
     scrapeButton.config(state='disabled')
 
-    # Gets data from seleniumScraper and dispalys it
+    # Gets data from seleniumScraper and displays it
     data = ss.getWeather()
     infoText.config(state='normal')
     infoText.delete('1.0', tk.END)

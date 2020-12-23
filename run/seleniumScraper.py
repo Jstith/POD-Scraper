@@ -18,7 +18,7 @@ def getWeather():
     options.add_argument("--headless")
 
     # Opens browser
-    browser = webdriver.Chrome(executable_path='resources/chromedriver.exe', options=options)
+    browser = webdriver.Chrome(executable_path='../resources/chromedriver.exe', options=options)
     browser.get('https://www.google.com/search?q=new+london+sunrise+sunset+tomorrow')
 
     # Waits for page to fully load, timeout value can be changed if you have a slow connection.
@@ -29,7 +29,7 @@ def getWeather():
         browser.quit()
         return ("Weather Timed out (make sure you're connected to the internet and try again)\n")
 
-    # Gets infomration
+    # Gets information
     sunrise = browser.find_element_by_xpath('//*[@id="rso"]/div[1]/div/div[1]/w-answer[1]/w-answer-desktop/div[1]').text
     sunrise = '0' + sunrise[:1] + sunrise[2:4]
     data = browser.find_element_by_xpath('//*[@id="rso"]/div[1]/div/div[1]/w-answer/w-answer-desktop/div[1]')
@@ -59,7 +59,7 @@ def getWeather():
     return_weather_data += (f'High: {high}, Low: {low}') + '\n'
     return_weather_data += (browser.find_element_by_xpath('//*[@id="wob_dc"]').text) + '\n'
     precip = browser.find_element_by_xpath('//*[@id="wob_pp"]').text
-    return_weather_data += (f'Chance of precepitation: {precip}') + '\n'
+    return_weather_data += (f'Chance of precipitation: {precip}') + '\n'
 
     # Exits browser and returns
     browser.quit()
@@ -69,7 +69,7 @@ def getWeather():
 # Function to scrape duty information from locally referenced csv
 def getDuty():
 
-    with open('resources/dutyScheduleF2020.csv', 'r') as csv_file:
+    with open('../resources/dutyScheduleF2020.csv', 'r') as csv_file:
         # Expecting comma delimiter by default
         csv_reader = csv.reader(csv_file)
 
@@ -77,12 +77,11 @@ def getDuty():
         for line in csv_reader:
 
             # Hard coding a 60 day offset so we can use the preexisting data
-            compStr = line[1]
             today = datetime.today() - timedelta(days=60)
             today = today.strftime("%m/%d/%Y")
             if today == line[1]:
 
-                # Kind of gnarly, the csv list deliminates on commas OR QUOTES, and deliminates the quotes, which is badass.
+                # Kind of gnarly, the csv list delimitates on commas OR QUOTES, and delimitates the quotes, which is badass.
                 return_duty_data = 'Duty Schedule: ' + line[2] + '\n'
                 return_duty_data += 'RCDO: ' + line[3] + '\n'
                 return_duty_data += 'ACDO: ' + line[4] + '\n'
