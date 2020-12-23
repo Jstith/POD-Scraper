@@ -93,9 +93,9 @@ def getDuty():
 
                 # Only a few values were filled, but why not
                 try:
-                    return_duty_data += 'Special Notes: ' + line[12]
+                    return_duty_data += 'Special Notes: ' + line[12] + '\n'
                 except IndexError:
-                    return_duty_data += 'Special Notes: none'
+                    return_duty_data += 'Special Notes: none\n'
                 return return_duty_data
 
 
@@ -105,11 +105,11 @@ def getUOD():
     # Hard coded to winter uniforms for now, just need the dates we switch for comparison (or we could do a button)
     weekday = (datetime.now() + timedelta(days=1)).strftime('%A')
     if weekday == 'Friday':
-        return "Uniform: Long Sleeve Tropical Blue Uniforms with Garrison Covers"
+        return "Uniform: Long Sleeve Tropical Blue Uniforms with Garrison Covers\n"
     elif weekday == 'Saturday' or weekday == 'Sunday':
-        return "Uniform: Service Dress Bravos with Combination Covers"
+        return "Uniform: Service Dress Bravos with Combination Covers\n"
     else:
-        return "Uniform: Operational Dress Uniforms with Class Specific Ballcaps"
+        return "Uniform: Operational Dress Uniforms with Class Specific Ballcaps\n"
 
 
 
