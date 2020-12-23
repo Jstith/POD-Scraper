@@ -64,6 +64,6 @@ print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
 
 ## Future Goals
 
-- Automate adding and removing accountments from their respective documents
+- Automate adding and removing announcements from their respective documents
 - Scrape CHDO (requires .edu network access)
 - Deploy to executable format or to web server
