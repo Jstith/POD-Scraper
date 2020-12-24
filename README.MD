@@ -14,7 +14,7 @@ By: _Jstith_
 
 ### What is it?
 
-The POD Web Scraper is a python based tool that lets users quickly and easily grab relevant information for creating the next day's POD. Built for windows and with an easy to use GUI, non-technical people can use this program too. It is literally click button get information!
+The POD Web Scraper is a python based tool that lets users quickly and easily grab relevant information for creating the next day's POD. Built for windows and Linux with an easy to use GUI. Non-technical people can use this program too, it is literally click button, get information!
 
 ### What gets read?
 
@@ -42,8 +42,6 @@ The UOD is determined by checking what day of the week it is. Nothing fancy ther
   - `pip install DateTime`
   - `csv - included by default`
   - `tkinter - included by default`
-- Windows executable environment
-  - I think all you'd need to do to run this in linux is to download the linux chromedriver. If anyone figures that out please send me a pull request.
 
 ### Selenium
 
@@ -63,9 +61,17 @@ print(getDuty())
 print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
 ```
 
-### Known Issues
+### Path Defaults
 
-- I'm figuring out how to properly write in the local referencing to the cvs document. Right now, it's configured to path correctly if you open the .git level folder in an ide or something that sets the relative directory there. This shouldn't be an issue to fix, so I must be missing something. Please send me a pull request if you get the path working for local execution.
+The default path for the location of the csv file is `resources/dutyScheduleF2020.cvs`. In order to correctly reference this file, run the program from the .git level folder (ex `python3 run/PODscraper.py`). If you want to change that or move the csv file around, modify the following line in `seleniumScraper.py`:
+
+```python
+# Can be modified to adjust relative path
+  with open('resources/dutyScheduleF2020.csv', 'r') as csv_file:
+```
+Here's an example of how to properly run the script:
+
+![](resources/path-example.png)
 
 ## Future Goals
 

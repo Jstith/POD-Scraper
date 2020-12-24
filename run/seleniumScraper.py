@@ -16,7 +16,7 @@ def getWeather():
     # Tells chromedriver to STFU, with varying success
     options = webdriver.ChromeOptions()
     options.add_argument("--log-level=3")
-    options.add_argument("--headless")
+    #options.add_argument("--headless")
 
     # Opens browser
     browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
@@ -70,6 +70,7 @@ def getWeather():
 # Function to scrape duty information from locally referenced csv
 def getDuty():
 
+    # Can be modified to adjust relative path
     with open('resources/dutyScheduleF2020.csv', 'r') as csv_file:
         # Expecting comma delimiter by default
         csv_reader = csv.reader(csv_file)
