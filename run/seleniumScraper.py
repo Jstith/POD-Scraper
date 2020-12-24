@@ -16,7 +16,7 @@ def getWeather():
     # Tells chromedriver to STFU, with varying success
     options = webdriver.ChromeOptions()
     options.add_argument("--log-level=3")
-    #options.add_argument("--headless")
+    options.add_argument("--headless")
 
     # Opens browser
     browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
