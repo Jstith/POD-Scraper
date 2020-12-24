@@ -40,6 +40,7 @@ The UOD is determined by checking what day of the week it is. Nothing fancy ther
   - `pip install selenium`
   - `pip install webdriver-manager`
   - `pip install DateTime`
+  - `pip install os-sys`
   - `csv - included by default`
   - `tkinter - included by default`
 
@@ -61,17 +62,18 @@ print(getDuty())
 print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
 ```
 
-### Path Defaults
+### Working Directory
 
-The default path for the location of the csv file is `resources/dutyScheduleF2020.cvs`. In order to correctly reference this file, run the program from the .git level folder (ex `python3 run/PODscraper.py`). If you want to change that or move the csv file around, modify the following line in `seleniumScraper.py`:
+The working directory gets set by the python script to the `Pod-Scraper/run` directory. If you want to change that or the relative path to the csv file for any reason, simply modify this code in `seleniumScraper.py`
+
 
 ```python
-# Can be modified to adjust relative path
-  with open('resources/dutyScheduleF2020.csv', 'r') as csv_file:
-```
-Here's an example of how to properly run the script:
+# Sets working directory to script's directory
+os.chdir(os.path.dirname(sys.argv[0]))
 
-![](resources/path-example.png)
+# Can be modified to adjust relative path
+with open('../resources/dutyScheduleF2020.csv', 'r') as csv_file:
+```
 
 ## Future Goals
 

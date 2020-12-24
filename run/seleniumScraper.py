@@ -8,7 +8,8 @@ from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
 import csv
-
+import os
+import sys
 
 # Function for web scraping weather information
 def getWeather():
@@ -70,8 +71,12 @@ def getWeather():
 # Function to scrape duty information from locally referenced csv
 def getDuty():
 
+    # Sets working directory to script's directory
+    os.chdir(os.path.dirname(sys.argv[0]))
+
     # Can be modified to adjust relative path
-    with open('resources/dutyScheduleF2020.csv', 'r') as csv_file:
+    with open('../resources/dutyScheduleF2020.csv', 'r') as csv_file:
+        
         # Expecting comma delimiter by default
         csv_reader = csv.reader(csv_file)
 
