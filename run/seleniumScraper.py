@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
 import csv
 
@@ -18,7 +19,7 @@ def getWeather():
     options.add_argument("--headless")
 
     # Opens browser
-    browser = webdriver.Chrome(executable_path='../resources/chromedriver.exe', options=options)
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     browser.get('https://www.google.com/search?q=new+london+sunrise+sunset+tomorrow')
 
     # Waits for page to fully load, timeout value can be changed if you have a slow connection.
@@ -69,7 +70,7 @@ def getWeather():
 # Function to scrape duty information from locally referenced csv
 def getDuty():
 
-    with open('../resources/dutyScheduleF2020.csv', 'r') as csv_file:
+    with open('resources/dutyScheduleF2020.csv', 'r') as csv_file:
         # Expecting comma delimiter by default
         csv_reader = csv.reader(csv_file)
 

@@ -38,6 +38,7 @@ The UOD is determined by checking what day of the week it is. Nothing fancy ther
 - Python3
 - PIP:
   - `pip install selenium`
+  - `pip install webdriver-manager`
   - `pip install DateTime`
   - `csv - included by default`
   - `tkinter - included by default`
@@ -46,7 +47,7 @@ The UOD is determined by checking what day of the week it is. Nothing fancy ther
 
 ### Selenium
 
-I used selenium as my web scraper. As such, I needed a driver and used chromedriver located in `resources/chromedriver`. It's the driver for chrome 87, so if it doesn't work first make sure your google chrome is installed with version 87. If you have 86 or 88, you can install the correct chromedriver from https://chromedriver.chromium.org/.
+I used selenium as my web scraper. As such, I needed a driver and used chromedriver. Originally, I downloaded the driver and tried to reference it locally, but the selenium is a nightmare when it comes to local referencing. Instead, I have the program download a new chromedriver to use. If you run the program more than once, it'll get cashed in your pycache, and the program should find it automatically. If you're particularly moved to get a local copy instead, you can install the correct chromedriver from https://chromedriver.chromium.org/.
 
 #### Timeout errors
 
@@ -61,6 +62,10 @@ print(getWeather())
 print(getDuty())
 print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
 ```
+
+### Known Issues
+
+- I'm figuring out how to properly write in the local referencing to the cvs document. Right now, it's configured to path correctly if you open the .git level folder in an ide or something that sets the relative directory there. This shouldn't be an issue to fix, so I must be missing something. Please send me a pull request if you get the path working for local execution.
 
 ## Future Goals
 
