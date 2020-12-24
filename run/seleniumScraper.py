@@ -16,8 +16,8 @@ def getWeather():
 
     # Tells chromedriver to STFU, with varying success
     options = webdriver.ChromeOptions()
-    options.add_argument("--log-level=3")
-    options.add_argument("--headless")
+    options.add_argument('--log-level=3')
+    options.add_argument('--headless')
 
     # Opens browser
     browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
@@ -33,16 +33,15 @@ def getWeather():
 
     # Gets information
     sunrise = browser.find_element_by_xpath('//*[@id="rso"]/div[1]/div/div[1]/w-answer[1]/w-answer-desktop/div[1]').text
-    sunrise = '0' + sunrise[:1] + sunrise[2:4]
-    data = browser.find_element_by_xpath('//*[@id="rso"]/div[1]/div/div[1]/w-answer/w-answer-desktop/div[1]')
+    sunset = browser.find_element_by_xpath('//*[@id="rso"]/div[1]/div/div[1]/w-answer/w-answer-desktop/div[1]').text
 
     # Formats information
-    title = data.text
-    str1 = title[:1]
+    sunrise = '0' + sunrise[:1] + sunrise[2:4]
+    str1 = sunset[:1]
     str1 = str(int(str1) + 12)
-    title = str1 + title[1:]
-    title = title[:2] + title[3:5]
-    return_weather_data = (f'Sunrise: {sunrise}, Sunset: {title}\n')
+    sunset = str1 + sunset[1:]
+    sunset = sunset[:2] + sunset[3:5]
+    return_weather_data = (f'Sunrise: {sunrise}, Sunset: {sunset}\n')
 
     # Goes to new page
     browser.get('https://www.google.com/search?q=new+london+weather+tomorrow')
@@ -55,13 +54,16 @@ def getWeather():
         browser.quit()
         return ("Weather Timed out (make sure you're connected to the internet and try again)\n")
 
-    # Gets info and formats return string as it goes
+    # Gets information
     high = browser.find_element_by_xpath('//*[@id="wob_dp"]/div[2]/div[3]/div[1]/span[1]').text
     low = browser.find_element_by_xpath('//*[@id="wob_dp"]/div[2]/div[3]/div[2]/span[1]').text
-    return_weather_data += (f'High: {high}, Low: {low}') + '\n'
-    return_weather_data += (browser.find_element_by_xpath('//*[@id="wob_dc"]').text) + '\n'
     precip = browser.find_element_by_xpath('//*[@id="wob_pp"]').text
-    return_weather_data += (f'Chance of precipitation: {precip}') + '\n'
+    weather = browser.find_element_by_xpath('//*[@id="wob_dc"]').text
+
+    # Formats information
+    return_weather_data += (f'High: {high}, Low: {low}\n')
+    return_weather_data += (f'Weather: {weather}\n')
+    return_weather_data += (f'Chance of precipitation: {precip}\n')
 
     # Exits browser and returns
     browser.quit()
@@ -89,18 +91,18 @@ def getDuty():
             if today == line[1]:
 
                 # Kind of gnarly, the csv list delimitates on commas OR QUOTES, and delimitates the quotes, which is badass.
-                return_duty_data = 'Duty Schedule: ' + line[2] + '\n'
-                return_duty_data += 'RCDO: ' + line[3] + '\n'
-                return_duty_data += 'ACDO: ' + line[4] + '\n'
-                return_duty_data += 'CIC: ' + line[5] + '\n'
-                return_duty_data += 'LHDO: ' + line[6] + '\n'
-                return_duty_data += 'JCDO: ' + line[7] + ' and ' + line[8] + '\n'
-                return_duty_data += 'LDO: ' + line[9] + '\n'
-                return_duty_data += 'MHDO: ' + line[10] + ' and ' + line[11] + '\n'
+                return_duty_data = (f'Duty Section: {line[2]} \n')
+                return_duty_data += (f'RCDO: {line[3]} \n')
+                return_duty_data += (f'ACDO: {line[4]} \n')
+                return_duty_data += (f'CIC: {line[5]} \n')
+                return_duty_data += (f'LHDO: {line[6]} \n')
+                return_duty_data += (f'JCDO: {line[7]} and {line[8]} \n')
+                return_duty_data += (f'LDO: {line[9]} \n')
+                return_duty_data += (f'MHDO: {line[10]} and {line[11]} \n')
 
                 # Only a few values were filled, but why not
                 try:
-                    return_duty_data += 'Special Notes: ' + line[12] + '\n'
+                    return_duty_data += (f'Special Notes: {line[12]} \n')
                 except IndexError:
                     return_duty_data += 'Special Notes: none\n'
                 return return_duty_data
@@ -112,16 +114,16 @@ def getUOD():
     # Hard coded to winter uniforms for now, just need the dates we switch for comparison (or we could do a button)
     weekday = (datetime.now() + timedelta(days=1)).strftime('%A')
     if weekday == 'Friday':
-        return "Uniform: Long Sleeve Tropical Blue Uniforms with Garrison Covers\n"
+        return 'Uniform: Long Sleeve Tropical Blue Uniforms with Garrison Covers\n'
     elif weekday == 'Saturday' or weekday == 'Sunday':
-        return "Uniform: Service Dress Bravos with Combination Covers\n"
+        return 'Uniform: Service Dress Bravos with Combination Covers\n'
     else:
-        return "Uniform: Operational Dress Uniforms with Class Specific Ballcaps\n"
+        return 'Uniform: Operational Dress Uniforms with Class Specific Ballcaps\n'
 
 
 
 # Uncomment these function calls to run this script from the CLI
 
-# print(getWeather())
-# print(getDuty())
+print(getWeather())
+print(getDuty())
 # print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
