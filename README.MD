@@ -54,6 +54,19 @@ print(getDuty())
 print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
 ```
 
+### Windows vs Linux
+
+This program runs on both windows and Linux with one exception. For reasons beyond me, the formatting indicator to remove leading zeros in datetime function is `#` on windows and `-` on Linux. So, to run in Linux, change the following line in `seleniumScraper.py`
+
+Windows (default)
+```python
+today = today.strftime("%b-%#d")
+```
+Linux
+```python
+today = today.strftime("%b-%-d")
+```
+
 ### Working Directory
 
 The working directory gets set by the python script to the `Pod-Scraper/run` directory. If you want to change that or the relative path to the csv file for any reason, simply modify this code in `seleniumScraper.py`

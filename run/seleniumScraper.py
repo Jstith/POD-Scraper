@@ -73,21 +73,26 @@ def getWeather():
 # Function to scrape duty information from locally referenced csv
 def getDuty():
 
+    fileName = 'Spring 2021 Duty Schedule - Sheet1.csv'
+
     # Sets working directory to script's directory
     os.chdir(os.path.dirname(sys.argv[0]))
 
     # Can be modified to adjust relative path
-    with open('../resources/dutyScheduleF2020.csv', 'r') as csv_file:
-        
+    with open('../resources/' + fileName, 'r') as csv_file:
+
         # Expecting comma delimiter by default
         csv_reader = csv.reader(csv_file)
 
         # Finds line with matching date
         for line in csv_reader:
 
-            # Hard coding a 60 day offset so we can use the preexisting data
-            today = datetime.today() - timedelta(days=60)
-            today = today.strftime("%m/%d/%Y")
+            #print(line)
+
+            # One day offset so it gets the next day's duty section
+            today = datetime.today() + timedelta(days=1)
+            today = today.strftime("%b-%#d")
+
             if today == line[1]:
 
                 # Kind of gnarly, the csv list delimitates on commas OR QUOTES, and delimitates the quotes, which is badass.
@@ -98,11 +103,17 @@ def getDuty():
                 return_duty_data += (f'LHDO: {line[6]} \n')
                 return_duty_data += (f'JCDO: {line[7]} and {line[8]} \n')
                 return_duty_data += (f'LDO: {line[9]} \n')
-                return_duty_data += (f'MHDO: {line[10]} and {line[11]} \n')
+                if line[11].isspace() or not line[11]:
+                    return_duty_data += (f'MHDO: {line[10]} \n')
+                else:
+                    return_duty_data += (f'MHDO: {line[10]} and {line[11]} \n')
 
                 # Only a few values were filled, but why not
                 try:
-                    return_duty_data += (f'Special Notes: {line[12]} \n')
+                    if line[12].isspace() or not line[12]:
+                        return_duty_data += 'Special Notes: none\n'
+                    else:
+                        return_daty_data += (f'Special Notes: {line[12]} \n')
                 except IndexError:
                     return_duty_data += 'Special Notes: none\n'
                 return return_duty_data
@@ -123,7 +134,6 @@ def getUOD():
 
 
 # Uncomment these function calls to run this script from the CLI
-
-print(getWeather())
-print(getDuty())
+# print(getWeather())
+# print(getDuty())
 # print('CAUTION, DEFAULT UNIFORM FOR WEEKDAY:\t' + getUOD())
