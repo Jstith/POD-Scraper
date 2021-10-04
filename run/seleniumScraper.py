@@ -73,7 +73,7 @@ def getWeather():
 # Function to scrape duty information from locally referenced csv
 def getDuty():
 
-    fileName = 'Spring 2021 Duty Schedule - Sheet1.csv'
+    fileName = 'dutyScheduleF2021.csv'
 
     # Sets working directory to script's directory
     os.chdir(os.path.dirname(sys.argv[0]))
@@ -87,36 +87,43 @@ def getDuty():
         # Finds line with matching date
         for line in csv_reader:
 
-            #print(line)
+            if(line[0] != ''):
+                print(line)
 
-            # One day offset so it gets the next day's duty section
-            today = datetime.today() + timedelta(days=1)
-            today = today.strftime("%b-%#d")
+                # One day offset so it gets the next day's duty section
+                today = datetime.today() + timedelta(days=1)
+                
+                # This has to match the formatting of the date on the roster
+                today = today.strftime("%Y-%m-%d")
+                if(today[0] == '0'):
+                    today = today[1:]
+                print(today)
 
-            if today == line[1]:
+                if today == line[1]:
 
-                # Kind of gnarly, the csv list delimitates on commas OR QUOTES, and delimitates the quotes, which is badass.
-                return_duty_data = (f'Duty Section: {line[2]} \n')
-                return_duty_data += (f'RCDO: {line[3]} \n')
-                return_duty_data += (f'ACDO: {line[4]} \n')
-                return_duty_data += (f'CIC: {line[5]} \n')
-                return_duty_data += (f'LHDO: {line[6]} \n')
-                return_duty_data += (f'JCDO: {line[7]} and {line[8]} \n')
-                return_duty_data += (f'LDO: {line[9]} \n')
-                if line[11].isspace() or not line[11]:
-                    return_duty_data += (f'MHDO: {line[10]} \n')
-                else:
-                    return_duty_data += (f'MHDO: {line[10]} and {line[11]} \n')
-
-                # Only a few values were filled, but why not
-                try:
-                    if line[12].isspace() or not line[12]:
-                        return_duty_data += 'Special Notes: none\n'
+                    # The classes are assumed here, if a 2/c stands in for RCDO it'll still say 1/c
+                    # Kind of gnarly, the csv list delimitates on commas OR QUOTES, and delimitates the quotes, which is badass.
+                    return_duty_data = (f'Duty Section: {line[2]} \n')
+                    return_duty_data += (f'RCDO: 1/c {line[3]} \n')
+                    return_duty_data += (f'ACDO: 2/c {line[4]} \n')
+                    return_duty_data += (f'CIC: 2/c {line[5]} \n')
+                    return_duty_data += (f'LHDO: 2/c {line[6]} \n')
+                    return_duty_data += (f'JCDO: 3/c {line[7]} and 3/c {line[8]} \n')
+                    return_duty_data += (f'LDO: 3/c {line[9]} \n')
+                    if line[11].isspace() or not line[11]:
+                        return_duty_data += (f'MHDO: 2/c {line[10]} \n')
                     else:
-                        return_daty_data += (f'Special Notes: {line[12]} \n')
-                except IndexError:
-                    return_duty_data += 'Special Notes: none\n'
-                return return_duty_data
+                        return_duty_data += (f'MHDO: 2/c {line[10]} and 2/c {line[11]} \n')
+
+                    # Only a few values were filled, but why not
+                    try:
+                        if line[12].isspace() or not line[12]:
+                            return_duty_data += 'Special Notes: none\n'
+                        else:
+                            return_daty_data += (f'Special Notes: {line[12]} \n')
+                    except IndexError:
+                        return_duty_data += 'Special Notes: none\n'
+                    return return_duty_data
 
 
 # Function for the UOD based on weekday
